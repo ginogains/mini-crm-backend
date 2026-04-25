@@ -13,19 +13,29 @@ exports.register = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
 
-  const user = await User.findOne({ email });
-  if (!user) return res.status(400).json({ msg: "User not found" });
+    const user = await User.findOne({ email });
+    if (!user) return res.status(400).json({ msg: "User not found" });
 
-  const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) return res.status(400).json({ msg: "Wrong password" });
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(400).json({ msg: "Wrong password" });
 
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-    expiresIn: "1d",
-  });
+    if (!process.env.JWT_SECRET) {
+      console.error("JWT_SECRET is not defined in environment variables!");
+      return res.status(500).json({ msg: "Server configuration error: missing JWT_SECRET" });
+    }
 
-  res.json({ token });
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1d",
+    });
+
+    res.json({ token });
+  } catch (error) {
+    console.error("Login Error:", error);
+    res.status(500).json({ msg: "Internal server error during login" });
+  }
 };
 
 exports.getUsers = async (req, res) => {
