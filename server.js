@@ -8,7 +8,11 @@ const app = express();
 
 connectDB();
 
-app.use(cors());
+app.use(cors({
+  origin: "https://crm-gino.netlify.app",
+  credentials: true
+}));
+
 app.use(express.json());
 
 app.use("/api/auth", require("./routes/authRoutes"));
