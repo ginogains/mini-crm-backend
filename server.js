@@ -8,13 +8,12 @@ const app = express();
 
 connectDB();
 
-app.use(cors({
-  origin: "https://mini-crm-gino.netlify.app",
-  credentials: true
-}));
+const cors = require("cors");
 
 app.use(cors({
-  origin: "*"
+  origin: "https://mini-crm-gino.netlify.app",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
 app.use(express.json());
