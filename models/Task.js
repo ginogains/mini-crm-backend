@@ -7,6 +7,7 @@ const taskSchema = new mongoose.Schema({
     enum: ["Pending", "Done"],
     default: "Pending"
   },
+  dueDate: Date,
   lead: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Lead"
