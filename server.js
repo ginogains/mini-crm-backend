@@ -13,6 +13,10 @@ app.use(cors({
   credentials: true
 }));
 
+app.use(cors({
+  origin: "*"
+}));
+
 app.use(express.json());
 
 app.use("/api/auth", require("./routes/authRoutes"));
