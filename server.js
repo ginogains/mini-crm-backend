@@ -8,8 +8,6 @@ const app = express();
 
 connectDB();
 
-const cors = require("cors");
-
 app.use(cors({
   origin: "https://mini-crm-gino.netlify.app",
   methods: ["GET", "POST", "PUT", "DELETE"],
