@@ -78,18 +78,13 @@ app.post("/tasks", async (req, res) => {
   }
 });
 
-const express = require("express");
-const router = express.Router();
-
-router.post("/auth/login", async (req, res) => {
+app.post("/auth/login", async (req, res) => {
   const { email, password } = req.body;
 
-  // TEMP login (for now)
+  // TEMP login
   if (email === "gino@test.com" && password === "123456") {
     return res.json({ token: "dummy-token" });
   }
 
   res.status(400).json({ msg: "Invalid credentials" });
 });
-
-module.exports = router;
