@@ -8,7 +8,11 @@ const app = express();
 
 connectDB();
 
-app.use(cors());
+app.use(cors({
+  origin: "https://mini-crm-gino.netlify.app",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 
 app.use(express.json());
 
@@ -18,9 +22,11 @@ app.use("/api/companies", require("./routes/companyRoutes"));
 app.use("/api/tasks", require("./routes/taskRoutes"));
 app.use("/api/dashboard", require("./routes/dashboardRoutes"));
 
-app.listen(process.env.PORT, () =>
-  console.log("Server running on port " + process.env.PORT)
-);
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log("Server running on port " + PORT);
+});
 
 // POST - Create Lead
 const Lead = require("./models/Lead");
