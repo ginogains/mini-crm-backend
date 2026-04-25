@@ -96,3 +96,7 @@ app.post("/auth/login", async (req, res) => {
 
   res.status(400).json({ msg: "Invalid credentials" });
 });
+
+app.get("/", (req, res) => {
+  res.send("Backend is running 🚀");
+});
